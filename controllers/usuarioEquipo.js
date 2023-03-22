@@ -82,10 +82,10 @@ const deleteUsuario = async (req = request, res = response) => {
         const id = req.params.id
         const usuarioDB = await UsuarioEquipo.findById(id)
         if(!usuarioDB){
-            return res.status(404).json({msg: 'El estado indicado no existe'})
+            return res.status(404).json({msg: 'El usuario indicado no existe'})
         }
         await UsuarioEquipo.findByIdAndDelete(id)
-        return res.status(204).json({msg: 'El estado ha sido eliminado: ', id})
+        return res.status(204).json({msg: 'El usuario ha sido eliminado: ', id})
     }catch(e){
         console.log(e)
         return res.status(500).json({msg: e})

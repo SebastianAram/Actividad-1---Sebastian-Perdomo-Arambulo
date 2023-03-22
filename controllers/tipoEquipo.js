@@ -85,10 +85,10 @@ const deleteTipo = async (req = request, res = response) => {
         const id = req.params.id
         const tipoDB = await TipoEquipo.findById(id)
         if(!tipoDB){
-            return res.status(404).json({msg: 'El estado indicado no existe'})
+            return res.status(404).json({msg: 'El tipo indicado no existe'})
         }
         await TipoEquipo.findByIdAndDelete(id)
-        return res.status(204).json({msg: 'El estado ha sido eliminado: ', id})
+        return res.status(204).json({msg: 'El tipo ha sido eliminado: ', id})
     }catch(e){
         console.log(e)
         return res.status(500).json({msg: e})
