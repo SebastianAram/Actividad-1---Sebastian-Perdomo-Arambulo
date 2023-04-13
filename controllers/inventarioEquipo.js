@@ -5,6 +5,7 @@ const MarcaEquipo = require('../models/marcaEquipo')
 const EstadoEquipo = require('../models/estadoEquipo')
 const TipoEquipo = require('../models/tipoEquipo')
 
+
 //Crear Objeto en el inventario
 
 const createInventarioEquipo = async (req = request, res = response) => {
@@ -56,17 +57,32 @@ const createInventarioEquipo = async (req = request, res = response) => {
 
 //Consultar todo el inventario
 
-const getInventarioEquipo = async (req = request, res = response) => {
-    try{
-
-        
-        const inventarioEquiposDB = await InventarioEquipo.find()
-        return res.json(inventarioEquiposDB)
-    }catch(e){
-        return res.status(500).json({
-            msg: e
-        })
-    }
+const getInventarioEquipo = async (req = request, 
+    res = response) => {
+        try{
+            const inventariosDB = await InventarioEquipo.find()
+                .populate({
+                    path: 'usuarioEquipo',
+                    match: { estado: true }
+                })
+                .populate({
+                    path: 'marcaEquipo',
+                    match: { estado: true }
+                })
+                .populate({
+                    path: 'estadoEquipo',
+                    match: { estado: true }
+                })
+                .populate({
+                    path: 'tipoEquipo',
+                    match: { estado: true }
+                })
+            return res.json(inventariosDB)
+        }catch(e){
+            return res.status(500).json({
+                msg: 'Error general ' + e
+            })
+        }
 }
 
 //Consultar inventario por ID
